@@ -44,7 +44,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Coin")) // Better way to check tags
+        if (other.CompareTag("coin")) // Better way to check tags
         {
             coinsCollected++;
             Destroy(other.gameObject); // Destroy the coin object
