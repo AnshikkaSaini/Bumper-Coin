@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -7,6 +8,10 @@ public class PlayerController : MonoBehaviour
     Rigidbody rb;
     float xInput;
     float yInput;
+    int score = 0;
+    public int winScore;
+    public GameObject WinText;
+    int coinsCollected;
 
 
     private void Awake()
@@ -24,10 +29,6 @@ public class PlayerController : MonoBehaviour
             SceneManager.LoadScene("Game");
 
         }
-
-
-
-
     }
 
     private void FixedUpdate()
@@ -36,9 +37,23 @@ public class PlayerController : MonoBehaviour
         yInput = Input.GetAxis("Vertical");
 
 
-        rb.AddForce(xInput * speed , 0 , yInput * speed );
+        rb.AddForce(xInput * speed, 0, yInput * speed);
 
 
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Coin")) // Better way to check tags
+        {
+            coinsCollected++;
+            Destroy(other.gameObject); // Destroy the coin object
+
+            if (coinsCollected >= winScore && WinText != null)
+            {
+                WinText.SetActive(true); // Display win message
+            }
+        }
     }
 
 }
